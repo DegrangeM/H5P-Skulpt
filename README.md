@@ -1,8 +1,10 @@
-# H5P-CodeMirror
+# H5P-Skulpt
 
-This H5P library is based on the [CodeMirror](https://github.com/codemirror/CodeMirror) and can be reused by other H5P library like the [H5P.CodeHighlighter](https://github.com/DegrangeM/H5P.CodeHighlighter) content-type. It can't be used as itself.
+This H5P library is based on [Skulpt](https://github.com/skulpt/skulpt/) and can be reused by other H5P library like the [H5P.Python](https://github.com/DegrangeM/H5P.Python) content-type. It can't be used as itself.
 
-The folder `addon`, `keymap`, `lib`, and `mode` are from the CodeMirror repository and have been stripped of unused files.
+The folder `lib` is from the Skulpt repository. Check the associated [license](https://github.com/skulpt/skulpt/blob/master/LICENSE).
+
+//TODO
 
 The `codemirror.css` and `codemirror.js` at the root are custom files.
 
