@@ -1,0 +1,21 @@
+{
+    "title": "Skulpt",
+    "contentType": "library",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "patchVersion": 0,
+    "runnable": 0,
+    "machineName": "Skulpt",
+    "author": "Mathieu Degrange - Library from Scott Graham and contributors to the Skulpt Project",
+    "preloadedJs": [
+        {
+            "path": "./lib/skulpt.min.js"
+        },
+        {
+            "path": "./lib/skulpt-stdlib.js"
+        },
+        {
+            "path": "skulpt.js"
+        }
+    ]
+}
