@@ -48,25 +48,68 @@ Sk.H5P = {
       });
     }
 
+    /*
+      If options.shouldStop function is given, the python script will call this function at each while / for and stop if the function return True.
+      It is possible to also set options.killableWhile or options.killableFor to choose when the function is called.
+    */
+    let suspension, killableWhile, killableFor;
+    if (options.shouldStop !== undefined) {
+      suspension = {
+        '*': () => {
+          if (options.shouldStop()) throw 'Execution interrupted';
+        }
+      };
+      killableWhile = options.killableWhile !== undefined ? options.killableWhile : true;
+      killableFor = options.killableFor !== undefined ? options.killableFor : true;
+    } else {
+      suspension = {};
+      killableWhile = false;
+      killableFor = false;
+    }
+
     Sk.configure({
       output: output,
       read: this.builtinRead,
       inputfun: input,
-      inputfunTakesPrompt: inputfunTakesPrompt
+      inputfunTakesPrompt: inputfunTakesPrompt,
+      killableWhile: killableWhile,
+      killableFor: killableFor,
     });
 
     (Sk.TurtleGraphics || (Sk.TurtleGraphics = {})).target = 'mycanvas'; // todo
 
     var myPromise = Sk.misceval.asyncToPromise(function () {
       return Sk.importMainWithBody('<stdin>', false, code, true);
-    });
+    }, suspension);
 
-    let onSuccess = options.onSuccess || (() => {}); // receive an argument that can be used to retrieve generated js and some variable
-    let onError = options.onError || (() => {}); // receive an argument that can be used to display error with err.toString()
-    let onFinally =  options.onFinally || (() => {});
+    let onSuccess = options.onSuccess || (() => { }); // receive an argument that can be used to retrieve generated js and some variable
+    let onError = options.onError || (() => { }); // receive an argument that can be used to display error with err.toString()
+    let onFinally = options.onFinally || (() => { });
     myPromise.then(onSuccess).catch(onError).finally(onFinally);
+  },
+  /**
+   * Return formatted traceback from an error
+   * @param error 
+   * @returns {string}
+   */
+  getTraceBackFromError: error => {
+    let errorText = '';
+    if (error.traceback) {
+      for (let i = 0; i < error.traceback.length; i++) {
+        if (error.traceback[i].filename === '<stdin>.py') {
+          errorText += '\n  at line ' + error.traceback[i].lineno;
+        }
+        else {
+          errorText += '\n  at ' + error.traceback[i].filename + ' line ' + error.traceback[i].lineno;
+        }
+        if ('colno' in error.traceback[i]) {
+          errorText += ' column ' + error.traceback[i].colno;
+        }
+      }
+    }
+    return errorText;
   }
-}
+};
 /**
  * @callback outputCallback
  * @param {string} output
