@@ -10,8 +10,11 @@ Sk.H5P = {
    * @param {Object} options
    * @param {inputCallback} options.input Function that will be used to request input
    * @param {outputCallback} options.output Function that will be used to display output
+   * @returns {Promise}
    */
   run: function (code, options) {
+
+    options = options || {};
 
     let output = options.output || (x => alert(x));
 
@@ -86,6 +89,8 @@ Sk.H5P = {
     let onError = options.onError || (() => { }); // receive an argument that can be used to display error with err.toString()
     let onFinally = options.onFinally || (() => { });
     myPromise.then(onSuccess).catch(onError).finally(onFinally);
+
+    return myPromise;
   },
   /**
    * Return formatted traceback from an error
