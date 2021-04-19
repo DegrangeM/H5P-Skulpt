@@ -88,9 +88,7 @@ Sk.H5P = {
     let onSuccess = options.onSuccess || (() => { }); // receive an argument that can be used to retrieve generated js and some variable
     let onError = options.onError || (() => { }); // receive an argument that can be used to display error with err.toString()
     let onFinally = options.onFinally || (() => { });
-    myPromise.then(onSuccess).catch(onError).finally(onFinally);
-
-    return myPromise;
+    return myPromise.then(onSuccess).catch(onError).finally(onFinally); // null can be passed to onError if you want to chain after Sk.H5P.run
   },
   /**
    * Return formatted traceback from an error
