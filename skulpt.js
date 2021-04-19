@@ -70,9 +70,12 @@ Sk.H5P = {
       killableFor = false;
     }
 
+
+    let read = options.read || this.builtinRead;
+
     Sk.configure({
       output: output,
-      read: this.builtinRead,
+      read: read,
       inputfun: input,
       inputfunTakesPrompt: inputfunTakesPrompt,
       killableWhile: killableWhile,
