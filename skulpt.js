@@ -1,7 +1,14 @@
 Sk.H5P = {
-  builtinRead: function (x) {
-    if (Sk.builtinFiles === undefined || Sk.builtinFiles['files'][x] === undefined)
+  builtinRead: (f) => function (x) { // https://github.com/skulpt/skulpt/issues/1202 && https://github.com/skulpt/skulpt/issues/1224 && https://github.com/skulpt/skulpt/issues/741
+    if (Sk.builtinFiles === undefined || Sk.builtinFiles['files'][x] === undefined) {
+      if (typeof f === 'function') {
+        let content = f(x);
+        if (content !== false) {
+          return content;
+        }
+      }
       throw 'File not found: \'' + x + '\'';
+    }
     return Sk.builtinFiles['files'][x];
   },
   /**
@@ -70,12 +77,9 @@ Sk.H5P = {
       killableFor = false;
     }
 
-
-    let read = options.read || this.builtinRead;
-
     Sk.configure({
       output: output,
-      read: read,
+      read: this.builtinRead(options.read), // todo : keep like that ?
       inputfun: input,
       inputfunTakesPrompt: inputfunTakesPrompt,
       killableWhile: killableWhile,
