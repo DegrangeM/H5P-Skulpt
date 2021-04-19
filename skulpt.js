@@ -89,7 +89,7 @@ Sk.H5P = {
     let onError = options.onError || (() => { }); // receive an argument that can be used to display error with err.toString()
     let onFinally = options.onFinally || (() => { });
     let finalPromise = myPromise.then(onSuccess).catch(onError).finally(onFinally);
-    return options.chain ? myPromise : finalPromise;
+    return options.originalPromise ? myPromise : finalPromise;
   },
   /**
    * Return formatted traceback from an error
