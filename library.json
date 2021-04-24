@@ -10,10 +10,10 @@
     "license": "MIT",
     "preloadedJs": [
         {
-            "path": "./lib/skulpt.min.js"
+            "path": "lib/skulpt.min.js"
         },
         {
-            "path": "./lib/skulpt-stdlib.js"
+            "path": "lib/skulpt-stdlib.js"
         },
         {
             "path": "skulpt.js"
