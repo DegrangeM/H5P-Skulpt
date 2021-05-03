@@ -77,13 +77,16 @@ Sk.H5P = {
       killableFor = false;
     }
 
+    let retainGlobals = options.retainGlobals || false;
+
     Sk.configure({
-      output: output,
+      output,
       read: this.builtinRead(options.read), // todo : keep like that ?
       inputfun: input,
-      inputfunTakesPrompt: inputfunTakesPrompt,
-      killableWhile: killableWhile,
-      killableFor: killableFor,
+      inputfunTakesPrompt,
+      killableWhile,
+      killableFor,
+      retainGlobals
     });
 
     (Sk.TurtleGraphics || (Sk.TurtleGraphics = {})).target = 'mycanvas'; // todo
