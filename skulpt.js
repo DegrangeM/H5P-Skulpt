@@ -9,6 +9,12 @@ Sk.H5P = {
       }
       throw 'File not found: \'' + x + '\'';
     }
+    if (x === 'src/lib/time.js') {
+      return Sk.builtinFiles.files['src/lib/time.js'].replace(
+        'Sk.misceval.promiseToSuspension(new Promise(function(b){Sk.setTimeout(',
+        'Sk.misceval.promiseToSuspension(new Promise(function(b,r){Sk.rejectSleep=r;Sk.setTimeout('
+      );
+    }
     return Sk.builtinFiles['files'][x];
   },
   /**
